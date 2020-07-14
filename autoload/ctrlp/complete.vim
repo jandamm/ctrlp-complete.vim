@@ -18,7 +18,7 @@ call add(g:ctrlp_ext_vars, {
 			\ 'sort': 0
 			\ })
 
-function! ctrlp#complete#init()
+function! ctrlp#complete#init() abort
 	let l=complete_info(['items'])
 	let nl=[]
 	for k in l.items
@@ -34,19 +34,19 @@ endfunction
 "           the values are 'e', 'v', 't' and 'h', respectively
 "  a:str    the selected string
 "
-function! ctrlp#complete#accept(mode, str)
+function! ctrlp#complete#accept(mode, str) abort
 	let @z=split(a:str, '\zs :')[0]
 	call ctrlp#exit()
 	normal! vb"_d"zp
 	call feedkeys('a')
 endfunction
 
-function! ctrlp#complete#exit()
+function! ctrlp#complete#exit() abort
 endfunction
 
 " Give the extension an ID
 let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
 
-function! ctrlp#complete#id()
+function! ctrlp#complete#id() abort
 	return s:id
 endfunction
