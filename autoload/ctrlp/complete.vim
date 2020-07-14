@@ -35,9 +35,11 @@ endfunction
 "  a:str    the selected string
 "
 function! ctrlp#complete#accept(mode, str) abort
+	let reg_z = @z
 	let @z=split(a:str, '\zs :')[0]
 	call ctrlp#exit()
 	normal! vb"_d"zp
+	let @z = reg_z
 	call feedkeys('a')
 endfunction
 
