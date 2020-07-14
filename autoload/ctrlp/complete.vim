@@ -8,6 +8,8 @@ if ( exists('g:loaded_ctrlp_complete') && g:loaded_ctrlp_complete )
 endif
 let g:loaded_ctrlp_complete = 1
 
+let s:comps = []
+
 call add(g:ctrlp_ext_vars, {
 			\ 'init': 'ctrlp#complete#init()',
 			\ 'accept': 'ctrlp#complete#accept',
@@ -19,12 +21,16 @@ call add(g:ctrlp_ext_vars, {
 			\ })
 
 function! ctrlp#complete#init() abort
-	let l=complete_info(['items'])
-	let nl=[]
-	for k in l.items
-		call add(nl, k['word']. ' : ' .k['info'] . ' '. k['menu'] )
+	if empty(s:comps)
+		let s:comps = complete_info(['items']).items
+	endif
+	let nl = []
+	let i = 1
+	for k in s:comps
+		call add(ret, index . '- '  . k['abbr'] . ' : ' . k['info'] . k['menu'])
+		let index += 1
 	endfor
-	return nl
+	return ret
 endfunction
 
 " The action to perform on the selected string
@@ -36,7 +42,8 @@ endfunction
 "
 function! ctrlp#complete#accept(mode, str) abort
 	let reg_z = @z
-	let @z=split(a:str, '\zs :')[0]
+	let index = split(a:str, '\v^\d+\zs- ')[0] - 1
+	let @z = s:comps[index].word
 	call ctrlp#exit()
 	normal! vb"_d"zp
 	let @z = reg_z
@@ -44,6 +51,7 @@ function! ctrlp#complete#accept(mode, str) abort
 endfunction
 
 function! ctrlp#complete#exit() abort
+	let s:comps = []
 endfunction
 
 " Give the extension an ID
