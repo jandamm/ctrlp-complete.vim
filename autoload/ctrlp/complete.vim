@@ -16,7 +16,7 @@ let s:plugin = {
 			\ 'accept': 'ctrlp#complete#accept',
 			\ 'lname': 'completion',
 			\ 'sname': 'comp',
-			\ 'type': 'line',
+			\ 'type': 'tabs',
 			\ 'exit': 'ctrlp#complete#exit()'
 			\ }
 
@@ -38,7 +38,7 @@ function! ctrlp#complete#init() abort
 	let index = 1
 	for comp in s:comps
 		let word = !empty(comp.abbr) ? comp.abbr : comp.word
-		call add(ret, printf('%s : %s - %s #%i', word, comp.info, comp.menu, index))
+		call add(ret, printf('%s	: %s - %s #%i', word, comp.info, comp.menu, index))
 		let index += 1
 	endfor
 	return ret
