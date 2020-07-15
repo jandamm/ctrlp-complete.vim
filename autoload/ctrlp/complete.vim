@@ -38,7 +38,7 @@ function! ctrlp#complete#init() abort
 	let index = 1
 	for comp in s:comps
 		let word = !empty(comp.abbr) ? comp.abbr : comp.word
-		call add(ret, printf('%i- %s : %s - %s', index, word, comp.info, comp.menu))
+		call add(ret, printf('%s : %s - %s #%i', word, comp.info, comp.menu, index))
 		let index += 1
 	endfor
 	return ret
@@ -53,7 +53,7 @@ endfunction
 "
 function! ctrlp#complete#accept(mode, str) abort
 	let reg_z = @z
-	let index = split(a:str, '\v^\d+\zs- ')[0] - 1
+	let index = substitute(a:str, '\v^.*\#(\d+)$', '\1', '') - 1
 	let @z = s:comps[index].word
 	call ctrlp#exit()
 	normal! vb"_d"zp
