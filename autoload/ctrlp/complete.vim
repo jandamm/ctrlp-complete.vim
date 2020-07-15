@@ -8,17 +8,23 @@ if ( exists('g:loaded_ctrlp_complete') && g:loaded_ctrlp_complete )
 endif
 let g:loaded_ctrlp_complete = 1
 
+let s:ext_id = -1
 let s:comps = []
 
-call add(g:ctrlp_ext_vars, {
+let s:plugin = {
 			\ 'init': 'ctrlp#complete#init()',
 			\ 'accept': 'ctrlp#complete#accept',
 			\ 'lname': 'completion',
 			\ 'sname': 'comp',
 			\ 'type': 'line',
-			\ 'exit': 'ctrlp#complete#exit()',
-			\ 'sort': 0
-			\ })
+			\ 'exit': 'ctrlp#complete#exit()'
+			\ }
+
+function! ctrlp#complete#start() abort
+	call add(g:ctrlp_ext_vars, s:plugin)
+	let s:ext_id = len(g:ctrlp_ext_vars)
+	call ctrlp#init(ctrlp#getvar('g:ctrlp_builtins') + s:ext_id)
+endfunction
 
 function! ctrlp#complete#init() abort
 	if empty(s:comps)
@@ -51,12 +57,10 @@ function! ctrlp#complete#accept(mode, str) abort
 endfunction
 
 function! ctrlp#complete#exit() abort
+	if s:ext_id > 0
+		call remove(g:ctrlp_ext_vars, s:ext_id - 1)
+	endif
+
 	let s:comps = []
-endfunction
-
-" Give the extension an ID
-let s:id = g:ctrlp_builtins + len(g:ctrlp_ext_vars)
-
-function! ctrlp#complete#id() abort
-	return s:id
+	let s:ext_id = -1
 endfunction

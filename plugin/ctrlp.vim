@@ -1,1 +1,1 @@
-inoremap <Plug>(ctrlp_complete) <CMD>call ctrlp#init(ctrlp#complete#id())<CR><ESC>
+inoremap <Plug>(ctrlp_complete) <CMD>call ctrlp#complete#start()<CR><ESC>
