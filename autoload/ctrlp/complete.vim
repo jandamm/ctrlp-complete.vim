@@ -59,6 +59,7 @@ function! ctrlp#complete#accept(mode, str) abort
 	normal! vb"_d"zp
 	let @z = reg_z
 	call feedkeys('a')
+	doautocmd User ctrlp_complete
 endfunction
 
 function! ctrlp#complete#exit() abort
