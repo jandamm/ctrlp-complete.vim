@@ -36,8 +36,9 @@ endfunction
 function! ctrlp#complete#init() abort
 	let ret = []
 	let index = 1
-	for k in s:comps
-		call add(ret, index . '- '  . k['abbr'] . ' : ' . k['info'] . k['menu'])
+	for comp in s:comps
+		let word = !empty(comp.abbr) ? comp.abbr : comp.word
+		call add(ret, printf('%i- %s : %s - %s', index, word, comp.info, comp.menu))
 		let index += 1
 	endfor
 	return ret
