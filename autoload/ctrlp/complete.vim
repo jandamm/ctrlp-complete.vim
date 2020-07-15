@@ -21,17 +21,21 @@ let s:plugin = {
 			\ }
 
 function! ctrlp#complete#start() abort
+	let s:comps = complete_info(['items']).items
+	call feedkeys("\<ESC>", 'n')
+
+	call timer_start(0, { -> s:start() })
+endfunction
+
+function! s:start() abort
 	call add(g:ctrlp_ext_vars, s:plugin)
 	let s:ext_id = len(g:ctrlp_ext_vars)
 	call ctrlp#init(ctrlp#getvar('g:ctrlp_builtins') + s:ext_id)
 endfunction
 
 function! ctrlp#complete#init() abort
-	if empty(s:comps)
-		let s:comps = complete_info(['items']).items
-	endif
-	let nl = []
-	let i = 1
+	let ret = []
+	let index = 1
 	for k in s:comps
 		call add(ret, index . '- '  . k['abbr'] . ' : ' . k['info'] . k['menu'])
 		let index += 1
