@@ -72,7 +72,10 @@ function! ctrlp#complete#accept(mode, str) abort
 	normal! vb"_d"zp
 	let @z = reg_z
 	call feedkeys('a')
-	doautocmd User ctrlp_complete
+	" Autocmd if not confirmed with <c-s> (silent)
+	if a:mode !=? 'h'
+		doautocmd User ctrlp_complete
+	endif
 endfunction
 
 function! ctrlp#complete#exit() abort
