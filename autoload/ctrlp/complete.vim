@@ -41,7 +41,16 @@ function! ctrlp#complete#init() abort
 		call add(ret, printf('%s	: %s - %s #%i', word, comp.info, comp.menu, index))
 		let index += 1
 	endfor
+	call s:highlight()
 	return ret
+endfunction
+
+function! s:highlight() abort
+	if ctrlp#nosy() | return | endif
+	call ctrlp#hicheck('CtrlPCompleteWord', 'Identifier')
+	call ctrlp#hicheck('CtrlPCompleteNumber', 'Comment')
+	sy match CtrlPCompleteWord '\v\zs.+\ze\t: '
+	sy match CtrlPCompleteNumber '\v#\d+'
 endfunction
 
 " The action to perform on the selected string
