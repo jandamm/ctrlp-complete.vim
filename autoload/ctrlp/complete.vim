@@ -22,11 +22,7 @@ let s:plugin = {
 
 function! ctrlp#complete#start() abort
 	let s:comps = complete_info(['items']).items
-	if get(g:, 'ctrlp_complete_always_esc', 0) || &completeopt =~? '\<noinsert\>'
-		call feedkeys("\<ESC>", 'n')
-	else
-		call feedkeys("\<C-e>", 'n')
-	endif
+	call feedkeys("\<C-e>\<ESC>", 'n')
 
 	call timer_start(0, { -> s:start() })
 endfunction
