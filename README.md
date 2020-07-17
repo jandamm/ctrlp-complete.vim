@@ -19,11 +19,21 @@ If you don't use `menu` or `menuone` as a completeopt:
 ```vim
 imap <C-f> <Plug>(ctrlp_complete)
 ```
-
 ## Usage
 
 Start a completion (e.g. `<C-x><C-o>`) and press your mapping.
 This will open CtrlP where you can search all possible completions.
+
+## Advanced
+
+There is also an `autocmd`: `User ctrlp_complete`.
+When this `autocmd` is triggered the selected completion is inserted
+and you're in insert mode again.
+
+```vim
+" Always add a space after ctrlp complete has inserted your selection.
+autocmd User ctrlp_complete call feedkeys(' ', 'n')
+```
 
 ## Installation
 
