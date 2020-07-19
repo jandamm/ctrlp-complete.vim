@@ -35,14 +35,24 @@ and you're in insert mode again.
 autocmd User ctrlp_complete call feedkeys(' ', 'n')
 ```
 
+When you're using the `autocmd` and want to select an entry without triggering the `autocmd` you can use  `<C-s>` (mnemonic: silent).
+It is the mapping for opening in a horizontal split. So by default `<C-CR>` and `<C-x>` work as well.
+
 ## Installation
 
 You have to have [CtrlP][1] installed. Install this plugin the same way.
+
+Your Vim needs to support `<CMD>` mappings. `:h <Cmd>` skulls exist.
 
 ## License
 
 CtrlP Complete is distributed under Vim's [license][3].
 
+## Credits
+
+This plugin is based on [this idea][4]
+
 [1]: https://github.com/ctrlpvim/ctrlp.vim
 [2]: example.png
 [3]: http://vimdoc.sourceforge.net/htmldoc/uganda.html
+[4]: https://vim.fandom.com/wiki/Fuzzy_insert_mode_completion_(using_FZF)
