@@ -42,7 +42,7 @@ It is the mapping for opening in a horizontal split. So by default `<C-CR>` and 
 
 You have to have [CtrlP][1] installed. Install this plugin the same way.
 
-Your Vim needs to support `<CMD>` mappings. `:h <Cmd>` skulls exist.
+Your Vim needs to support `<CMD>` mappings. `:h <Cmd>` should exist.
 
 ## License
 
@@ -50,7 +50,7 @@ CtrlP Complete is distributed under Vim's [license][3].
 
 ## Credits
 
-This plugin is based on [this idea][4]
+This plugin is based on [this idea][4].
 
 [1]: https://github.com/ctrlpvim/ctrlp.vim
 [2]: example.png
