@@ -70,7 +70,7 @@ function! ctrlp#complete#accept(mode, str) abort
 	call feedkeys('a')
 	" Autocmd if not confirmed with <c-s> (silent)
 	if a:mode !=? 'h' && exists('#User#ctrlp_complete')
-		doautocmd User ctrlp_complete
+		doautocmd <nomodeline> User ctrlp_complete
 	endif
 endfunction
 
