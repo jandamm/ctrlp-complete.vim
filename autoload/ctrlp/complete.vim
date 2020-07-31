@@ -69,7 +69,7 @@ function! ctrlp#complete#accept(mode, str) abort
 	let @z = reg_z
 	call feedkeys('a')
 	" Autocmd if not confirmed with <c-s> (silent)
-	if a:mode !=? 'h'
+	if a:mode !=? 'h' && exists('#User#ctrlp_complete')
 		doautocmd User ctrlp_complete
 	endif
 endfunction
