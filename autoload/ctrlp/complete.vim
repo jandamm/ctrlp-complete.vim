@@ -61,14 +61,25 @@ endfunction
 "  a:str    the selected string
 "
 function! ctrlp#complete#accept(mode, str) abort
-	let reg_z = @z
-	let index = substitute(a:str, '\v^.*\#(\d+)$', '\1', '') - 1
-	let @z = s:comps[index].word
+	let selection = s:comps[substitute(a:str, '\v^.*\#(\d+)$', '\1', '') - 1].word
 	call ctrlp#exit()
-	normal! vb"_d"zp
-	let @z = reg_z
+
+	" Get context
+	let pos = getcurpos()
+	let cursor = pos[2]
+	let line = getline('.')
+	let lline = strpart(line, 0, cursor)
+
+	" Insert selection
+	let repl = substitute(lline, '\v^(.*%(\s|\.))[a-z_]+$', '\1'.selection, '')
+	call setline(pos[1], repl . strpart(line, cursor))
+
+	" Adjust cursor position
+	let pos[2] += len(repl) - len(lline)
+	call setpos('.', pos)
 	call feedkeys('a')
-	" Autocmd if not confirmed with <c-s> (silent)
+
+	" Autocmd if not confirmed with <C-s> (silent)
 	if a:mode !=? 'h' && exists('#User#ctrlp_complete')
 		doautocmd <nomodeline> User ctrlp_complete
 	endif
