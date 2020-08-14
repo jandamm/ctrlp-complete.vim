@@ -28,6 +28,13 @@ function! ctrlp#complete#start() abort
 endfunction
 
 function! s:start() abort
+	" Init CtrlP before adding to ext_vars
+	" Otherwise it would result in shifted extension when using ctrlp completion
+	" before any other ctrlp extension.
+	if !exists('s:used_before')
+		call ctrlp#init('')
+		let s:used_before = 1 " Ideally this would be replaced by a check if CtrlP was used before.
+	endif
 	call add(g:ctrlp_ext_vars, s:plugin)
 	let s:ext_id = len(g:ctrlp_ext_vars)
 	call ctrlp#init(ctrlp#getvar('g:ctrlp_builtins') + s:ext_id)
