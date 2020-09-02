@@ -78,7 +78,7 @@ function! ctrlp#complete#accept(mode, str) abort
 	let lline = strpart(line, 0, cursor)
 
 	" Insert selection
-	let repl = substitute(lline, '\v^(.*%(^|\s|\.))[a-z_]*$', '\1'.selection, '')
+	let repl = substitute(lline, '\v^(.*[^a-z_])[a-z_]*$', '\1'.selection, '')
 	call setline(pos[1], repl . strpart(line, cursor))
 
 	" Adjust cursor position
